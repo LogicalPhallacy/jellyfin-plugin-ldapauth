@@ -39,7 +39,18 @@ namespace Jellyfin.Plugin.LDAP_Auth
                 try
                 {
                     ldapClient.Connect(_config.LdapServer,_config.LdapPort);
-                    ldapClient.Bind(_config.LdapBindUser,_config.LdapBindPassword);
+                    if(_config.UseTls)
+                    {
+                        ldapClient.StartTls();
+                        if(ldapClient.TLS){
+                            ldapClient.Bind(_config.LdapBindUser,_config.LdapBindPassword);
+                        }else{
+                            _logger.LogError("StartTLS failed");
+                        }
+                    }else
+                    {
+                        ldapClient.Bind(_config.LdapBindUser,_config.LdapBindPassword);
+                    }
                 }
                 catch(Exception e)
                 {
@@ -81,6 +92,9 @@ namespace Jellyfin.Plugin.LDAP_Auth
                         _logger.LogError("Found no users matching {1} in LDAP search.", username);
                         throw new Exception("Found no LDAP users matching provided username.");
                     }
+                }
+                if(_config.UseTls){
+                    ldapClient.StopTls();
                 }
             }
             

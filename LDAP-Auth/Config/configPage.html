@@ -27,6 +27,13 @@
                                 </label>
                                 <div class="fieldDescription checkboxFieldDescription">Use SSL for the LDAP connection.</div>
                             </div>
+                            <div class="checkboxContainer checkboxContainer-withDescription">
+                                <label>
+                                    <input type="checkbox" is="emby-checkbox" id="chkUseTls" />
+                                    <span>Use Tls:</span>
+                                </label>
+                                <div class="fieldDescription checkboxFieldDescription">Enables Start and Stop for TLS.</div>
+                            </div>
                             <div class="inputContainer fldExternalAddressFilter">
                                 <input is="emby-input" type="text" id="txtLdapBaseDn" label="LDAP Base DN for searches:" />
                                 <div class="fieldDescription">The base DN structure for your LDAP query.</div>
@@ -97,6 +104,7 @@
 
                     $('#txtLdapServer', page).val(config.LdapServer || "ldap-server.contoso.com");
                     $("#chkUseSsl", page).checked(config.UseSsl);
+                    $("#chkUseTls", page).checked(config.UseTls);
                     $('#txtLdapBaseDn', page).val(config.LdapBaseDn || "o=domains,dc=contoso,dc=com");
                     $('#txtLdapPort', page).val(config.LdapPort || "389");
                     $('#txtLdapSearchAttributes', page).val(config.LdapSearchAttributes || "uid, cn, mail, displayName");
@@ -119,6 +127,7 @@
                 ApiClient.getPluginConfiguration(SyncConfigurationPage.pluginUniqueId).then(function (config) {
                     config.LDAPServer = $('#txtLdapServer').val();
                     config.UseSsl = $("#chkUseSsl").checked();
+                    config.UseTls = $("#chkUseTls").checked();
                     config.LdapBaseDn = $('#txtLdapBaseDn').val();
                     config.LdapSearchAttributes = $('#txtLdapSearchAttributes').val();
                     config.LdapUsernameAttribute = $('#txtLdapUsernameAttribute').val();

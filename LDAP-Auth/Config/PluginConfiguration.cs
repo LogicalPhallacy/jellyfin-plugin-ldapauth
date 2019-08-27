@@ -13,6 +13,7 @@ namespace Jellyfin.Plugin.LDAP_Auth
         public string LdapBindPassword { get; set; }
         public bool CreateUsersFromLdap { get; set; }
         public bool UseSsl { get; set; }
+        public bool UseTls {get; set;}
         public PluginConfiguration()
         {
             LdapServer = "ldap-server.contoso.com";
@@ -26,6 +27,7 @@ namespace Jellyfin.Plugin.LDAP_Auth
             LdapBindPassword = "password";
             CreateUsersFromLdap = true;
             UseSsl = true;
+            UseTls = true;
         }
     }
 }
