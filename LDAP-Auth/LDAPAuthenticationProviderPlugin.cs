@@ -59,6 +59,9 @@ namespace Jellyfin.Plugin.LDAP_Auth
                 }
                 if(ldapClient.Bound)
                 {
+                    LdapSearchConstraints constraints = ldapClient.SearchConstraints;
+                    constraints.ReferralFollowing = true;
+                    ldapClient.Constraints = constraints;
                     LdapSearchResults ldapUsers = ldapClient.Search(_config.LdapBaseDn, 2, searchFilter, ldapAttrs, false);
                     if (ldapUsers == null)
                     {
